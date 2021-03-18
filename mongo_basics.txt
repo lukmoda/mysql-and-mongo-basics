@@ -1,0 +1,85 @@
+https://docs.mongodb.com/manual/crud/
+
+show dbs;
+use curso_ds;
+
+#Insert One
+db.zoologic.insertOne(
+   { species: "Tiger", class: "Mammal", qty: 4, danger_extintion: true, body: { length: 300, weight: 250 } }
+);
+
+show collections;
+
+#Insert Many
+db.zoologic.insertMany([
+   { species: "Wolf", class: "Mammal", qty: 10, danger_extintion: false, body: { length: 120, weight: 50 } },
+   { species: "Giraffe", class: "Mammal", qty: 3, danger_extintion: true, body: { length: 400, weight: 800 } },
+   { species: "Elephant", class: "Mammal", qty: 5, danger_extintion: true, body: { length: 600, weight: 6000 } },
+   { species: "Bear", class: "Mammal", qty: 8, danger_extintion: true, body: { length: 280, weight: 450 } },
+   { species: "Lion", class: "Mammal", qty: 7, danger_extintion: false, body: { length: 300, weight: 250 } },
+   { species: "Turtle", class: "Reptile", qty: 12, danger_extintion: false, body: { length: 130, weight: 320 } },
+   { species: "Chimpanzee", class: "Mammal", qty: 15, danger_extintion: false, body: { length: 90, weight: 70 } },
+   { species: "Komodo Dragon", class: "Reptile", qty: 3, danger_extintion: true, body: { length: 300, weight: 100 } },
+   { species: "Crocodile", class: "Reptile", qty: 5, danger_extintion: true, body: { length: 420, weight: 500 } },
+   { species: "Ostrich", class: "Bird", qty: 4, danger_extintion: false, body: { length: 200, weight: 200 } },
+   { species: "Shark", class: "Fish", qty: 8, danger_extintion: false, body: { length: 500, weight: 600 } },
+   { species: "Dolphin", class: "Mammal", qty: 9, danger_extintion: false, body: { length: 200, weight: 180 } },
+   { species: "Hyena", class: "Mammal", qty: 20, danger_extintion: false, body: { length: 130, weight: 60 } },
+   { species: "Frog", class: "Reptile", qty: 40, danger_extintion: false, body: { length: 20, weight: 5 } },
+   { species: "Snake", class: "Reptile", qty: 25, danger_extintion: false, body: { length: 450, weight: 50 } },
+   { species: "Buffalo", class: "Mammal", qty: 3, danger_extintion: false, body: { length: 250, weight: 600 } },
+   { species: "Flamingo", class: "Bird", qty: 13, danger_extintion: true, body: { length: 150, weight: 40 } },
+   { species: "Tuna", class: "Fish", qty: 33, danger_extintion: false, body: { length: 30, weight: 8 } },
+]
+);
+
+#Select All
+db.zoologic.find( {} );
+
+#Select Where
+db.zoologic.find( { class: "Reptile" } );
+
+#Select In
+db.zoologic.find( { class: { $in: [ "Fish", "Bird" ] } } );
+
+#Select And
+db.zoologic.find( { class: "Mammal", qty: { $lt: 8 } } );
+
+#Select Or
+db.zoologic.find( { $or: [ { danger_extintion: "false" }, { qty: { $gt: 20 } } ] } );
+
+#Select Nested find
+db.zoologic.find( { "body.weight": { $gt: 500 } } );
+
+#Update One
+db.zoologic.updateOne(
+   { species: "Tiger" },
+   {
+     $set: { qty: 7, danger_extintion: false }
+   }
+);
+
+#Update Many
+db.zoologic.updateMany(
+   { qty: { $lt: 8 } },
+   {
+     $set: { qty: 0}
+   }
+);
+
+#Delete One
+db.zoologic.deleteOne( { species: "Turtle" } );
+
+#Delete Many
+db.zoologic.deleteMany({ class : "Mammal" });
+
+#Delete All
+db.zoologic.deleteMany({});
+
+#Delete Colletion
+db.zoologic.drop();
+
+#Delete Database
+db.dropDatabase();
+
+
